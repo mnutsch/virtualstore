@@ -9,7 +9,7 @@
 	<script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
 
 	<!-- Needed to add Text -->
-	<script src="https://rawgit.com/ngokevin/aframe-text-component/master/dist/aframe-text-component.min.js"></script>
+	<script src="http://www.mattnutsch.com/development/breakoutvr/aframe-text-component.min.js"></script>
 
   </head>
   <body>
@@ -28,6 +28,50 @@
 		<!-- set game background planes. -->
 		<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>
 		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
+		
+		<!-- background 360 image. -->
+		<!--<a-sky src="city.jpg"></a-sky>-->
+		
+		<!-- Set camera starting position. -->
+		<a-entity position="0 1 3.8">
+			<a-camera look-controls id="myCamera" wasd-controls="enabled: false">
+				<a-cursor id="cursor" material="color: gray; opacity: 0.5">
+				</a-cursor>
+			</a-camera>
+		</a-entity>
+
+		<!-- Set light position. -->
+		<a-light
+			type="directional"
+			color="#FFF"
+			intensity="0.1"
+			position="-1 1 2">
+		</a-light>
+		<a-light
+			type="ambient"
+			color="#FFF">
+		</a-light>
+		
+		<a-entity bmfont-text="text: HELLO!; color: #333" position="0 0 -5"></a-entity>
+		
+		<script>		
+		//wait until the page loads to perform the following
+		window.onload = function () 
+		{
+			//init vars
+			var scene = document.querySelector('a-scene'); //assign a name to the A-Frame scene
+		
+			//Display a welcome message	
+			var welcomeMessage = "Hey Sam! Welcome.";
+			var welcomeText = document.createElement('a-entity');
+			welcomeText.setAttribute('mixin', 'blue');
+			scene.appendChild(welcomeText);
+			welcomeText.setAttribute('text', 'text: ' + welcomeMessage);
+			welcomeText.setAttribute('position', '-3.5 3.8 -0.8');
+			welcomeText.setAttribute('size', '0.75');
+			
+		}
+		</script>
 		
 	</a-scene>	
 
