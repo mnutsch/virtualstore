@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+  
+	<!-- 
+	Name: virtualstore.html
+	Author: Matt Nutsch
+	Date: 10-21-2017
+	Description: This is a Virtual Reality shopping cart.
+	
+	-->
+  
     <meta charset="utf-8">
     <title>Virtual Store</title>
     <meta name="description" content="Virtual Store">
@@ -49,7 +58,7 @@
 				</a-cursor>
 			</a-camera>
 		</a-entity>
-
+		
 		<!-- Set light position. -->
 		<a-light
 			type="directional"
@@ -65,11 +74,9 @@
 		<a-entity bmfont-text="text: HELLO!; color: #333" position="0 0 -5"></a-entity>
 		
 		<!--add the products -->
-		<!--<a-entity id="product0" obj-model="obj: #galaxys3_black-obj; mtl: #galaxys3_black-mtl" position="-3 0 0" rotation="0 0 180" scale="1 1 1" material="side: double"></a-entity>-->
+		<!--<a-entity id="product0" obj-model="obj: #galaxys3_black-obj; mtl: #galaxys3_black-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.00001 0.00001 0.00001" material="side: double"></a-entity>-->
 		<a-entity id="product0" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
-		
 		<a-entity id="product1" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
-		
 		<a-entity id="product2" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
 		
 		<script>		
@@ -84,8 +91,15 @@
 			var productObjectsY = []; //object y positions
 			var productObjectsZ = []; //object z positions
 			
-			var maxXPosition = 5;
-			var minXPosition = -5;
+			var maxXPosition = []; //max X pos of objects
+			var minXPosition = []; //min X pos of objects
+			
+			maxXPosition[0] = 2;
+			minXPosition[0] = -8;
+			maxXPosition[1] = 5;
+			minXPosition[1] = -5;
+			maxXPosition[2] = 8;
+			minXPosition[2] = -2;
 			
 			//velocity for movement
 			var viewPosition = 0;
@@ -101,11 +115,17 @@
 			var blockColor = '#4CC3D9';
 			
 			//declare a temp object
+			productObjects[0] = document.getElementById('product0');
+			productObjects[1] = document.getElementById('product1');
+			productObjects[2] = document.getElementById('product2');
+			
+			/*
 			productObjects[0] = document.createElement('a-box');
 			productObjects[0].setAttribute('width', blockWidth);
 			productObjects[0].setAttribute('height', blockHeight);
 			productObjects[0].setAttribute('depth', blockDepth);
 			productObjects[0].setAttribute('color', blockColor);
+			*/
 			
 			/*
 			productObjects[0] = document.createElement('a-obj-model');
@@ -116,16 +136,27 @@
 			productObjects[0].setAttribute('scale', '1 1 1');
 			*/
 			//<a-entity obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
-		
-			//declare temp object location
-			productObjectsX[0] = -1.5;
-			productObjectsY[0] = 3.5;
-			productObjectsZ[0] = -1;
 			
-			//add the temp object to the scene
-			scene.appendChild(productObjects[0]);
+			//declare object locations
+			productObjectsX[0] = -3;
+			productObjectsY[0] = 2.5;
+			productObjectsZ[0] = 0;
+			
+			productObjectsX[1] = 0;
+			productObjectsY[1] = 2.5;
+			productObjectsZ[1] = 0;
+			
+			productObjectsX[2] = 3;
+			productObjectsY[2] = 2.5;
+			productObjectsZ[2] = 0;
+			
+			//set the objects' init locs
+			//scene.appendChild(productObjects[0]);
 			productObjects[0].setAttribute('position', productObjectsX[0] + ' ' + productObjectsY[0] + ' ' + productObjectsZ[0]);
-		
+			productObjects[1].setAttribute('position', productObjectsX[1] + ' ' + productObjectsY[1] + ' ' + productObjectsZ[1]);
+			productObjects[2].setAttribute('position', productObjectsX[2] + ' ' + productObjectsY[2] + ' ' + productObjectsZ[2]);
+
+			
 			//Display a welcome message	
 			var welcomeMessage = "Hey Guest! Welcome.";
 			var welcomeText = document.createElement('a-entity');
@@ -152,7 +183,11 @@
 					productVelocityX = 0;
 				}
 				
-				productObjectsX[0] = productObjectsX[0] + productVelocityX;
+				for (i = 0; i < 3; i++) 
+				{
+					productObjectsX[i] = productObjectsX[i] + productVelocityX;
+				} 
+
 			}
 			
 			//stop the objects from moving when they reach the boundary
@@ -160,16 +195,18 @@
 			{
 				//dev note, make this a for loop
 				
-					if(productObjectsX[0] > maxXPosition)
+					for (i = 0; i < 3; i++) 
 					{
-						productObjectsX[0] = maxXPosition
+						if(productObjectsX[i] > maxXPosition[i])
+						{
+							productObjectsX[i] = maxXPosition[i]
+						}
+						
+						if(productObjectsX[i] < minXPosition[i])
+						{
+							productObjectsX[i] = minXPosition[i]
+						}
 					}
-					
-					if(productObjectsX[0] < minXPosition)
-					{
-						productObjectsX[0] = minXPosition
-					}
-				
 			}
 			
 			//Timer for the app
@@ -178,9 +215,11 @@
 				checkCollisions(); //check to see if anything collided
 				moveObjects(); //update the X and Y coordinates of game objects
 				
-				//make this into a for loop
-				productObjects[0].setAttribute('position', productObjectsX[0] + ' ' + productObjectsY[0] + ' ' + productObjectsZ[0]); //reposition the products
-						
+				for (i = 0; i < 3; i++) 
+				{
+					productObjects[i].setAttribute('position', productObjectsX[i] + ' ' + productObjectsY[i] + ' ' + productObjectsZ[i]); //reposition the products
+				}
+				
 			}, intervalLength);
 			
 		}
