@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+	<!-- 
+	Name: virtualstore.html
+	Author: Matt Nutsch
+	Date: 10-21-2017
+	Description: This is a Virtual Reality shopping cart.
+	
+	-->
+  
+    <meta charset="utf-8">
+    <title>Virtual Store</title>
+    <meta name="description" content="Virtual Store">
+	
+	<!-- Basic A-Frame library -->
+	<script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+
+	<!-- Needed to add Text -->
+	<script src="http://www.mattnutsch.com/development/breakoutvr/aframe-text-component.min.js"></script>
+
+  </head>
+  <body>
+	
+	<a-scene>	
+		
+		<!-- Assets -->
+		<a-assets>
+		
+			<!-- Mixins. -->
+			<a-mixin id="red" material="color: red"></a-mixin>
+			<a-mixin id="green" material="color: green"></a-mixin>
+			<a-mixin id="blue" material="color: blue; opacity: 0.5"></a-mixin>
+			<a-mixin id="url-red" material="color: #d63959"></a-mixin>
+			<a-mixin id="cube" geometry="primitive: box"></a-mixin>
+			
+			<!-- Product 0 - iPhone 8 -->	
+			<a-asset-item id="iphone_8-obj" src="static/iphone_8.obj"></a-asset-item>
+			<a-asset-item id="iphone_8-mtl" src="static/iphone_8.mtl"></a-asset-item>
+			<!-- Product 1 - Galaxy S3 -->	
+			<a-asset-item id="galaxys3_black-obj" src="static/galaxys3_black.obj"></a-asset-item>
+			<a-asset-item id="galaxys3_black-mtl" src="static/galaxys3_black.mtl"></a-asset-item>
+		
+		</a-assets>
+		
+		<!-- set game background planes. -->
+		<!--<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>-->
+		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
+		
+		<!-- background 360 image. -->
+		<a-sky color="#E20074" ></a-sky>
+		
+		<!-- Set camera starting position. -->
+		<a-entity position="0 1 3.8">
+			<a-camera look-controls id="myCamera" wasd-controls="enabled: false">
+				<a-cursor id="cursor" material="color: gray; opacity: 0.5">
+				</a-cursor>
+			</a-camera>
+		</a-entity>
+		
+		<!-- Set light position. -->
+		<a-light
+			type="directional"
+			color="#FFF"
+			intensity="0.1"
+			position="-1 1 2">
+		</a-light>
+		<a-light
+			type="ambient"
+			color="#FFF">
+		</a-light>
+		
+		<a-entity bmfont-text="text: HELLO!; color: #333" position="0 0 -5"></a-entity>
+		
+		<!--add the products -->
+		<!--<a-entity id="product0" obj-model="obj: #galaxys3_black-obj; mtl: #galaxys3_black-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.00001 0.00001 0.00001" material="side: double"></a-entity>-->
+		<a-entity id="product0" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		<a-entity id="product1" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		<a-entity id="product2" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		
+		<!-- Textured circes behind the products. -->
+		<a-circle id="circle0" color="#FFF" radius="1.3" position="-2.5 1 -1" rotation="0 0 0"></a-circle>
+		<a-circle id="circle1" color="#FFF" radius="1.3" position="0.5 1 -1" rotation="0 0 0"></a-circle>
+		<a-circle id="circle2" color="#FFF" radius="1.3" position="3.5 1 -1" rotation="0 0 0"></a-circle>
+		
+		
+		<script>		
+		//wait until the page loads to perform the following
+		window.onload = function () 
+		{
+			//init vars
+			var scene = document.querySelector('a-scene'); //assign a name to the A-Frame scene
+		
+			var productObjects = []; //objects
+			var productObjectsX = []; //object x positions
+			var productObjectsY = []; //object y positions
+			var productObjectsZ = []; //object z positions
+			
+			var circleObjects = []; //circles behind the objects
+			var circleObjectsX = []; //object x positions
+			var circleObjectsY = []; //object y positions
+			var circleObjectsZ = []; //object z positions
+			
+			var maxXPosition = []; //max X pos of objects
+			var minXPosition = []; //min X pos of objects
+			
+			maxXPosition[0] = 2;
+			minXPosition[0] = -8;
+			maxXPosition[1] = 5;
+			minXPosition[1] = -5;
+			maxXPosition[2] = 8;
+			minXPosition[2] = -2;
+			
+			//velocity for movement
+			var viewPosition = 0;
+			var productVelocityX = 0;
+			var velocityChangeSpeed = 0.1;
+			
+			var intervalLength = 25; //determines the speed of the app
+		
+			//temp placeholders for objects
+			var blockWidth = 0.2;
+			var blockHeight = 0.2;
+			var blockDepth = 0.2;
+			var blockColor = '#4CC3D9';
+			
+			//declare a temp object
+			productObjects[0] = document.getElementById('product0');
+			productObjects[1] = document.getElementById('product1');
+			productObjects[2] = document.getElementById('product2');
+			
+			circleObjects[0] = document.getElementById('circle0');
+			circleObjects[1] = document.getElementById('circle1');
+			circleObjects[2] = document.getElementById('circle2');
+			
+			/*
+			productObjects[0] = document.createElement('a-box');
+			productObjects[0].setAttribute('width', blockWidth);
+			productObjects[0].setAttribute('height', blockHeight);
+			productObjects[0].setAttribute('depth', blockDepth);
+			productObjects[0].setAttribute('color', blockColor);
+			*/
+			
+			/*
+			productObjects[0] = document.createElement('a-obj-model');
+			productObjects[0].setAttribute('obj', '#iphone_8-obj');
+			productObjects[0].setAttribute('mtl', '#iphone_8-mtl');
+			productObjects[0].setAttribute('position', '3 2.5 0');
+			productObjects[0].setAttribute('rotation', '0 0 180');
+			productObjects[0].setAttribute('scale', '1 1 1');
+			*/
+			//<a-entity obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+			
+			//declare object locations
+			productObjectsX[0] = -3;
+			productObjectsY[0] = 2.5;
+			productObjectsZ[0] = 0;
+			
+			productObjectsX[1] = 0;
+			productObjectsY[1] = 2.5;
+			productObjectsZ[1] = 0;
+			
+			productObjectsX[2] = 3;
+			productObjectsY[2] = 2.5;
+			productObjectsZ[2] = 0;
+			
+			//
+			circleObjectsX[0] = -2.5;
+			circleObjectsY[0] = 1;
+			circleObjectsZ[0] = -1;
+			
+			circleObjectsX[1] = 0.5;
+			circleObjectsY[1] = 1;
+			circleObjectsZ[1] = -1;
+			
+			circleObjectsX[2] = 3.5;
+			circleObjectsY[2] = 1;
+			circleObjectsZ[2] = -1;
+			
+			//set the objects' init locs
+			//scene.appendChild(productObjects[0]);
+			productObjects[0].setAttribute('position', productObjectsX[0] + ' ' + productObjectsY[0] + ' ' + productObjectsZ[0]);
+			productObjects[1].setAttribute('position', productObjectsX[1] + ' ' + productObjectsY[1] + ' ' + productObjectsZ[1]);
+			productObjects[2].setAttribute('position', productObjectsX[2] + ' ' + productObjectsY[2] + ' ' + productObjectsZ[2]);
+
+			circleObjects[0].setAttribute('position', circleObjectsX[0] + ' ' + circleObjectsY[0] + ' ' + circleObjectsZ[0]);
+			circleObjects[1].setAttribute('position', circleObjectsX[1] + ' ' + circleObjectsY[1] + ' ' + circleObjectsZ[1]);
+			circleObjects[2].setAttribute('position', circleObjectsX[2] + ' ' + circleObjectsY[2] + ' ' + circleObjectsZ[2]);
+			
+			//Display a welcome message	
+			var welcomeMessage = "Hey Guest! Welcome.";
+			var welcomeText = document.createElement('a-entity');
+			welcomeText.setAttribute('mixin', 'blue');
+			scene.appendChild(welcomeText);
+			welcomeText.setAttribute('text', 'text: ' + welcomeMessage);
+			welcomeText.setAttribute('position', '-3.5 3.8 -0.8');
+			welcomeText.setAttribute('size', '0.75');
+			
+			function moveObjects()
+			{
+				//move the products				
+				viewPosition = (myCamera.getAttribute('rotation').y / -19) * 1.25;
+				if(viewPosition < -1.25)
+				{
+					productVelocityX = -1 * velocityChangeSpeed;
+				}
+				else if(viewPosition > 1.25)
+				{
+					productVelocityX = velocityChangeSpeed;
+				}
+				else
+				{
+					productVelocityX = 0;
+				}
+				
+				for (i = 0; i < 3; i++) 
+				{
+					productObjectsX[i] = productObjectsX[i] + productVelocityX;
+					circleObjectsX[i] = circleObjectsX[i] + productVelocityX;
+				} 
+
+			}
+			
+			//stop the objects from moving when they reach the boundary
+			function checkCollisions()
+			{
+				//dev note, make this a for loop
+				
+					for (i = 0; i < 3; i++) 
+					{
+						if(productObjectsX[i] > maxXPosition[i])
+						{
+							productObjectsX[i] = maxXPosition[i]
+							circleObjectsX[i] = maxXPosition[i]
+						}
+						
+						if(productObjectsX[i] < minXPosition[i])
+						{
+							productObjectsX[i] = minXPosition[i]
+							circleObjectsX[i] = minXPosition[i]
+						}
+					}
+			}
+			
+			//Timer for the app
+			setInterval(function()
+			{
+				checkCollisions(); //check to see if anything collided
+				moveObjects(); //update the X and Y coordinates of game objects
+				
+				for (i = 0; i < 3; i++) 
+				{
+					productObjects[i].setAttribute('position', productObjectsX[i] + ' ' + productObjectsY[i] + ' ' + productObjectsZ[i]); //reposition the products
+					circleObjects[i].setAttribute('position', circleObjectsX[i] + ' ' + circleObjectsY[i] + ' ' + circleObjectsZ[i]); //reposition the circles
+				}
+				
+			}, intervalLength);
+			
+		}
+		</script>
+		
+	</a-scene>	
+
+  </body>
+</html>
