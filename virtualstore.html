@@ -26,17 +26,18 @@
 			<a-mixin id="url-red" material="color: #d63959"></a-mixin>
 			<a-mixin id="cube" geometry="primitive: box"></a-mixin>
 			
-			<!-- iPhone 8 -->	
+			<!-- Product 0 - iPhone 8 -->	
 			<a-asset-item id="iphone_8-obj" src="static/iphone_8.obj"></a-asset-item>
 			<a-asset-item id="iphone_8-mtl" src="static/iphone_8.mtl"></a-asset-item>
+			<!-- Product 1 - Galaxy S3 -->	
+			<a-asset-item id="galaxys3_black-obj" src="static/galaxys3_black.obj"></a-asset-item>
+			<a-asset-item id="galaxys3_black-mtl" src="static/galaxys3_black.mtl"></a-asset-item>
 		
 		</a-assets>
 		
 		<!-- set game background planes. -->
 		<!--<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>-->
 		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
-		
-		<a-entity id="product0" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
 		
 		<!-- background 360 image. -->
 		<a-sky color="#E20074" ></a-sky>
@@ -62,6 +63,14 @@
 		</a-light>
 		
 		<a-entity bmfont-text="text: HELLO!; color: #333" position="0 0 -5"></a-entity>
+		
+		<!--add the products -->
+		<!--<a-entity id="product0" obj-model="obj: #galaxys3_black-obj; mtl: #galaxys3_black-mtl" position="-3 0 0" rotation="0 0 180" scale="1 1 1" material="side: double"></a-entity>-->
+		<a-entity id="product0" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		
+		<a-entity id="product1" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		
+		<a-entity id="product2" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
 		
 		<script>		
 		//wait until the page loads to perform the following
