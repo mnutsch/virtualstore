@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Virtual Store</title>
+    <meta name="description" content="Virtual Store">
+	
+	<!-- Basic A-Frame library -->
+	<script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+
+	<!-- Needed to add Text -->
+	<script src="https://rawgit.com/ngokevin/aframe-text-component/master/dist/aframe-text-component.min.js"></script>
+
+  </head>
+  <body>
+	
+	<a-scene>	
+		
+		<!-- Mixins. -->
+		<a-assets>
+			<a-mixin id="red" material="color: red"></a-mixin>
+			<a-mixin id="green" material="color: green"></a-mixin>
+			<a-mixin id="blue" material="color: blue; opacity: 0.5"></a-mixin>
+			<a-mixin id="url-red" material="color: #d63959"></a-mixin>
+			<a-mixin id="cube" geometry="primitive: box"></a-mixin>
+		</a-assets>
+		
+		<!-- set game background planes. -->
+		<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>
+		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
+		
+	</a-scene>	
+
+  </body>
+</html>
