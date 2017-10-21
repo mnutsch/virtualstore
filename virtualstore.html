@@ -16,21 +16,31 @@
 	
 	<a-scene>	
 		
-		<!-- Mixins. -->
+		<!-- Assets -->
 		<a-assets>
+		
+			<!-- Mixins. -->
 			<a-mixin id="red" material="color: red"></a-mixin>
 			<a-mixin id="green" material="color: green"></a-mixin>
 			<a-mixin id="blue" material="color: blue; opacity: 0.5"></a-mixin>
 			<a-mixin id="url-red" material="color: #d63959"></a-mixin>
 			<a-mixin id="cube" geometry="primitive: box"></a-mixin>
+			
+			<!-- iPhone 8 -->	
+			<a-asset-item id="iphone_8-obj" src="iphone_8.obj"></a-asset-item>
+			<a-asset-item id="iphone_8-mtl" src="iphone_8.mtl"></a-asset-item>
+		
 		</a-assets>
 		
 		<!-- set game background planes. -->
 		<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>
 		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
 		
+		<a-entity obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		
+		
 		<!-- background 360 image. -->
-		<!--<a-sky src="city.jpg"></a-sky>-->
+		<a-sky color="#E20074" ></a-sky>
 		
 		<!-- Set camera starting position. -->
 		<a-entity position="0 1 3.8">
@@ -69,6 +79,8 @@
 			welcomeText.setAttribute('text', 'text: ' + welcomeMessage);
 			welcomeText.setAttribute('position', '-3.5 3.8 -0.8');
 			welcomeText.setAttribute('size', '0.75');
+			
+			
 			
 		}
 		</script>
