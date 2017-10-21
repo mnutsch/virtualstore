@@ -27,17 +27,16 @@
 			<a-mixin id="cube" geometry="primitive: box"></a-mixin>
 			
 			<!-- iPhone 8 -->	
-			<a-asset-item id="iphone_8-obj" src="iphone_8.obj"></a-asset-item>
-			<a-asset-item id="iphone_8-mtl" src="iphone_8.mtl"></a-asset-item>
+			<a-asset-item id="iphone_8-obj" src="static/iphone_8.obj"></a-asset-item>
+			<a-asset-item id="iphone_8-mtl" src="static/iphone_8.mtl"></a-asset-item>
 		
 		</a-assets>
 		
 		<!-- set game background planes. -->
-		<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>
+		<!--<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>-->
 		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
 		
-		<a-entity obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
-		
+		<a-entity id="product0" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
 		
 		<!-- background 360 image. -->
 		<a-sky color="#E20074" ></a-sky>
@@ -99,6 +98,16 @@
 			productObjects[0].setAttribute('depth', blockDepth);
 			productObjects[0].setAttribute('color', blockColor);
 			
+			/*
+			productObjects[0] = document.createElement('a-obj-model');
+			productObjects[0].setAttribute('obj', '#iphone_8-obj');
+			productObjects[0].setAttribute('mtl', '#iphone_8-mtl');
+			productObjects[0].setAttribute('position', '3 2.5 0');
+			productObjects[0].setAttribute('rotation', '0 0 180');
+			productObjects[0].setAttribute('scale', '1 1 1');
+			*/
+			//<a-entity obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		
 			//declare temp object location
 			productObjectsX[0] = -1.5;
 			productObjectsY[0] = 3.5;
