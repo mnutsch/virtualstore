@@ -71,8 +71,45 @@
 			//init vars
 			var scene = document.querySelector('a-scene'); //assign a name to the A-Frame scene
 		
+			var productObjects = []; //objects
+			var productObjectsX = []; //object x positions
+			var productObjectsY = []; //object y positions
+			var productObjectsZ = []; //object z positions
+			
+			var maxXPosition = 5;
+			var minXPosition = -5;
+			
+			//velocity for movement
+			var viewPosition = 0;
+			var productVelocityX = 0;
+			var velocityChangeSpeed = 0.1;
+			
+			var intervalLength = 25; //determines the speed of the app
+		
+			//temp placeholders for objects
+			var blockWidth = 0.2;
+			var blockHeight = 0.2;
+			var blockDepth = 0.2;
+			var blockColor = '#4CC3D9';
+			
+			//declare a temp object
+			productObjects[0] = document.createElement('a-box');
+			productObjects[0].setAttribute('width', blockWidth);
+			productObjects[0].setAttribute('height', blockHeight);
+			productObjects[0].setAttribute('depth', blockDepth);
+			productObjects[0].setAttribute('color', blockColor);
+			
+			//declare temp object location
+			productObjectsX[0] = -1.5;
+			productObjectsY[0] = 3.5;
+			productObjectsZ[0] = -1;
+			
+			//add the temp object to the scene
+			scene.appendChild(productObjects[0]);
+			productObjects[0].setAttribute('position', productObjectsX[0] + ' ' + productObjectsY[0] + ' ' + productObjectsZ[0]);
+		
 			//Display a welcome message	
-			var welcomeMessage = "Hey Sam! Welcome.";
+			var welcomeMessage = "Hey Guest! Welcome.";
 			var welcomeText = document.createElement('a-entity');
 			welcomeText.setAttribute('mixin', 'blue');
 			scene.appendChild(welcomeText);
@@ -80,7 +117,53 @@
 			welcomeText.setAttribute('position', '-3.5 3.8 -0.8');
 			welcomeText.setAttribute('size', '0.75');
 			
+			function moveObjects()
+			{
+				//move the products				
+				viewPosition = (myCamera.getAttribute('rotation').y / -19) * 1.25;
+				if(viewPosition < -1.25)
+				{
+					productVelocityX = -1 * velocityChangeSpeed;
+				}
+				else if(viewPosition > 1.25)
+				{
+					productVelocityX = velocityChangeSpeed;
+				}
+				else
+				{
+					productVelocityX = 0;
+				}
+				
+				productObjectsX[0] = productObjectsX[0] + productVelocityX;
+			}
 			
+			//stop the objects from moving when they reach the boundary
+			function checkCollisions()
+			{
+				//dev note, make this a for loop
+				
+					if(productObjectsX[0] > maxXPosition)
+					{
+						productObjectsX[0] = maxXPosition
+					}
+					
+					if(productObjectsX[0] < minXPosition)
+					{
+						productObjectsX[0] = minXPosition
+					}
+				
+			}
+			
+			//Timer for the app
+			setInterval(function()
+			{
+				checkCollisions(); //check to see if anything collided
+				moveObjects(); //update the X and Y coordinates of game objects
+				
+				//make this into a for loop
+				productObjects[0].setAttribute('position', productObjectsX[0] + ' ' + productObjectsY[0] + ' ' + productObjectsZ[0]); //reposition the products
+						
+			}, intervalLength);
 			
 		}
 		</script>
