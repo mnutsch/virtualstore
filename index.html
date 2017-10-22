@@ -6,8 +6,14 @@
 	Name: virtualstore.html
 	Author: Matt Nutsch
 	Date: 10-21-2017
-	Description: This is a Virtual Reality shopping cart.
-	
+	Description: This is a Virtual Reality shopping cart demo.
+	It was created for the 10-21-2017 Hacktoberfest hackathon in Richardson, TX.
+	Team members:
+		Timothy Bramlett
+		Theresa Le
+		Matt Nutsch - www.MattNutsch.com
+		Matt Souza
+		
 	-->
   
     <meta charset="utf-8">
@@ -30,29 +36,59 @@
 		
 			<!-- Mixins. -->
 			<a-mixin id="red" material="color: red"></a-mixin>
+			<a-mixin id="white" material="color: white"></a-mixin>
 			<a-mixin id="green" material="color: green"></a-mixin>
 			<a-mixin id="blue" material="color: blue; opacity: 0.5"></a-mixin>
 			<a-mixin id="url-red" material="color: #d63959"></a-mixin>
 			<a-mixin id="cube" geometry="primitive: box"></a-mixin>
 			
-			<!-- Product 0 - iPhone 8 -->	
+			<!-- Product 0 headphones -->
+			<a-asset-item id="Headphones-obj" src="static/Headphones.obj"></a-asset-item>
+			<!-- Product 1 - Redmi Note 4 -->	
+			<a-asset-item id="redmi_note_4-obj" src="static/redmi_note_4.obj"></a-asset-item>
+			<a-asset-item id="redmi_note_4-mtl" src="static/redmi_note_4.mtl"></a-asset-item>
+			<!-- Product 2 - iPhone 8 -->	
 			<a-asset-item id="iphone_8-obj" src="static/iphone_8.obj"></a-asset-item>
 			<a-asset-item id="iphone_8-mtl" src="static/iphone_8.mtl"></a-asset-item>
-			<!-- Product 1 - Galaxy S3 -->	
-			<a-asset-item id="galaxys3_black-obj" src="static/galaxys3_black.obj"></a-asset-item>
-			<a-asset-item id="galaxys3_black-mtl" src="static/galaxys3_black.mtl"></a-asset-item>
-		
+			<!-- Product ? - iPhone 5 -->	
+			<a-asset-item id="iPhone5-obj" src="static/iPhone5.obj"></a-asset-item>
+			<a-asset-item id="iPhone5-mtl" src="static/iPhone5.mtl"></a-asset-item>
+			
+			<!-- static images -->
+			<img id="welcome-text" src="static/welcome-text@3x.png">
+			<img id="tmobile-logo-white" src="static/tmobile-logo-white@3x.png">
+			
+			<img id="bose-product-footer" src="static/bose-product-footer@3x.png">
+			<img id="samsung-product-footer" src="static/samsung-product-footer@3x.png">
+			<img id="apple-product-footer" src="static/apple-product-footer@3x.png">
+			
+			<img id="bose-product-header" src="static/bose-product-header@3x.png">
+			<img id="samsung-product-header" src="static/samsung-product-header@3x.png">
+			<img id="apple-product-header" src="static/apple-product-header@3x.png">
+			
+			<img id="t-mobile-background" src="static/t-mobile-background3x.jpg">
+			
+			<img id="iphone_screen" src="static/Iphone5_Screen.png">
+			
 		</a-assets>
 		
 		<!-- set game background planes. -->
 		<!--<a-plane rotation="-90 0 0" width="4" height="4" color="#a0a0a0"></a-plane>-->
-		<a-plane position="0 2 -2" rotation="0 0 0" width="4" height="4" color="#bfabce"></a-plane>
+		<a-plane position="-1 2 -2" rotation="0 0 0" width="18" height="10" color="#bfabce" opacity="0.7)"></a-plane>
+		<a-plane position="-5.5 2 -0.1" rotation="0 0 0" width="5.5" height="8" color="#bfabce" opacity="1)"></a-plane>
 		
 		<!-- background 360 image. -->
-		<a-sky color="#E20074" ></a-sky>
+		<!--<a-sky color="#E20074" ></a-sky>-->
+		<a-sky src="#t-mobile-background"></a-sky>
+		
+		<!-- welcome message -->
+		<a-image src="#welcome-text" position="-5.3 1.5 0" scale="2 2 2"></a-image>
+		
+		<!-- tmobile logo -->
+		<a-image src="#tmobile-logo-white" position="-5.3 4 0" scale="2.5 1 1"></a-image>
 		
 		<!-- Set camera starting position. -->
-		<a-entity position="0 1 3.8">
+		<a-entity position="-1 2 5.8">
 			<a-camera look-controls id="myCamera" wasd-controls="enabled: false">
 				<a-cursor id="cursor" material="color: gray; opacity: 0.5">
 				</a-cursor>
@@ -74,8 +110,9 @@
 		<a-entity bmfont-text="text: HELLO!; color: #333" position="0 0 -5"></a-entity>
 		
 		<!--add the products -->
-		<!--<a-entity id="product0" obj-model="obj: #galaxys3_black-obj; mtl: #galaxys3_black-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.00001 0.00001 0.00001" material="side: double"></a-entity>-->
 		<a-entity id="product0" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="-3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
+		<!--<a-entity id="product0" obj-model="obj: #Headphones-obj; position="-3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>-->
+	
 		<a-entity id="product1" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="0 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
 		<a-entity id="product2" obj-model="obj: #iphone_8-obj; mtl: #iphone_8-mtl" position="3 2.5 0" rotation="0 0 180" scale="0.005 0.005 0.005" material="side: double"></a-entity>
 		
@@ -83,6 +120,21 @@
 		<a-circle id="circle0" color="#FFF" radius="1.3" position="-2.5 1 -1" rotation="0 0 0"></a-circle>
 		<a-circle id="circle1" color="#FFF" radius="1.3" position="0.5 1 -1" rotation="0 0 0"></a-circle>
 		<a-circle id="circle2" color="#FFF" radius="1.3" position="3.5 1 -1" rotation="0 0 0"></a-circle>
+		
+		<!-- product details imgs -->
+		<a-image id="details0" src="#bose-product-footer" position="-3 -1 0" scale="1.5 1.5 1.5"></a-image>
+		<a-image id="details1" src="#samsung-product-footer" position="0 -1 0" scale="1.5 1.5 1.5"></a-image>
+		<a-image id="details2" src="#apple-product-footer" position="3 -1 0" scale="1.5 1.5 1.5"></a-image>
+		
+		<!-- header text imgs -->
+		<a-image id="header0" src="#bose-product-header" position="-3 -1 0" scale="1.2 1 1"></a-image>
+		<a-image id="header1" src="#samsung-product-header" position="0 -1 0" scale="2 1 1"></a-image>
+		<a-image id="header2" src="#apple-product-header" position="3 -1 0" scale="1.5 1 1"></a-image>
+		
+		<!-- phone screen imgs -->
+		<a-image id="screen0" src="#iphone_screen" position="-2.4 1 -0.8" scale="1 2 1"></a-image>
+		<a-image id="screen1" src="#iphone_screen" position="0.6 1 -0.8" scale="1 2 1"></a-image>
+		<a-image id="screen2" src="#iphone_screen" position="3.6 1 -0.8" scale="1 2 1"></a-image>
 		
 		
 		<script>		
@@ -102,8 +154,25 @@
 			var circleObjectsY = []; //object y positions
 			var circleObjectsZ = []; //object z positions
 			
+			var detailsObjects = []; //details
+			var detailsObjectsX = []; //object x positions
+			var detailsObjectsY = []; //object y positions
+			var detailsObjectsZ = []; //object z positions
+			
+			var headerObjects = []; //header
+			var headerObjectsX = []; //object x positions
+			var headerObjectsY = []; //object y positions
+			var headerObjectsZ = []; //object z positions
+			
+			var screenObjects = []; //screen
+			var screenObjectsX = []; //object x positions
+			var screenObjectsY = []; //object y positions
+			var screenObjectsZ = []; //object z positions
+			
 			var maxXPosition = []; //max X pos of objects
 			var minXPosition = []; //min X pos of objects
+			
+			var maxXViewPosition = 5.5; //max X pos where objects are viewable
 			
 			maxXPosition[0] = 2;
 			minXPosition[0] = -8;
@@ -133,6 +202,18 @@
 			circleObjects[0] = document.getElementById('circle0');
 			circleObjects[1] = document.getElementById('circle1');
 			circleObjects[2] = document.getElementById('circle2');
+			
+			detailsObjects[0] = document.getElementById('details0');
+			detailsObjects[1] = document.getElementById('details1');
+			detailsObjects[2] = document.getElementById('details2');
+			
+			headerObjects[0] = document.getElementById('header0');
+			headerObjects[1] = document.getElementById('header1');
+			headerObjects[2] = document.getElementById('header2');
+			
+			screenObjects[0] = document.getElementById('screen0');
+			screenObjects[1] = document.getElementById('screen1');
+			screenObjects[2] = document.getElementById('screen2');
 			
 			/*
 			productObjects[0] = document.createElement('a-box');
@@ -165,7 +246,7 @@
 			productObjectsY[2] = 2.5;
 			productObjectsZ[2] = 0;
 			
-			//
+			//circles
 			circleObjectsX[0] = -2.5;
 			circleObjectsY[0] = 1;
 			circleObjectsZ[0] = -1;
@@ -178,6 +259,45 @@
 			circleObjectsY[2] = 1;
 			circleObjectsZ[2] = -1;
 			
+			//details
+			detailsObjectsX[0] = -2.5;
+			detailsObjectsY[0] = -1;
+			detailsObjectsZ[0] = -0.9;
+			
+			detailsObjectsX[1] = 0.5;
+			detailsObjectsY[1] = -1;
+			detailsObjectsZ[1] = -0.9;
+			
+			detailsObjectsX[2] = 3.5;
+			detailsObjectsY[2] = -1;
+			detailsObjectsZ[2] = -0.9;
+			
+			//headers
+			headerObjectsX[0] = -2.5;
+			headerObjectsY[0] = 3;
+			headerObjectsZ[0] = -0.9;
+			
+			headerObjectsX[1] = 0.5;
+			headerObjectsY[1] = 3;
+			headerObjectsZ[1] = -0.9;
+			
+			headerObjectsX[2] = 3.5;
+			headerObjectsY[2] = 3;
+			headerObjectsZ[2] = -0.9;
+			
+			//screens
+			screenObjectsX[0] = -2.4;
+			screenObjectsY[0] = 1;
+			screenObjectsZ[0] = -0.81;
+			
+			screenObjectsX[1] = 0.6;
+			screenObjectsY[1] = 1;
+			screenObjectsZ[1] = -0.81;
+			
+			screenObjectsX[2] = 3.6;
+			screenObjectsY[2] = 1;
+			screenObjectsZ[2] = -0.81;
+			
 			//set the objects' init locs
 			//scene.appendChild(productObjects[0]);
 			productObjects[0].setAttribute('position', productObjectsX[0] + ' ' + productObjectsY[0] + ' ' + productObjectsZ[0]);
@@ -188,15 +308,18 @@
 			circleObjects[1].setAttribute('position', circleObjectsX[1] + ' ' + circleObjectsY[1] + ' ' + circleObjectsZ[1]);
 			circleObjects[2].setAttribute('position', circleObjectsX[2] + ' ' + circleObjectsY[2] + ' ' + circleObjectsZ[2]);
 			
-			//Display a welcome message	
-			var welcomeMessage = "Hey Guest! Welcome.";
-			var welcomeText = document.createElement('a-entity');
-			welcomeText.setAttribute('mixin', 'blue');
-			scene.appendChild(welcomeText);
-			welcomeText.setAttribute('text', 'text: ' + welcomeMessage);
-			welcomeText.setAttribute('position', '-3.5 3.8 -0.8');
-			welcomeText.setAttribute('size', '0.75');
+			detailsObjects[0].setAttribute('position', detailsObjectsX[0] + ' ' + detailsObjectsY[0] + ' ' + detailsObjectsZ[0]);
+			detailsObjects[1].setAttribute('position', detailsObjectsX[1] + ' ' + detailsObjectsY[1] + ' ' + detailsObjectsZ[1]);
+			detailsObjects[2].setAttribute('position', detailsObjectsX[2] + ' ' + detailsObjectsY[2] + ' ' + detailsObjectsZ[2]);
 			
+			headerObjects[0].setAttribute('position', headerObjectsX[0] + ' ' + headerObjectsY[0] + ' ' + headerObjectsZ[0]);
+			headerObjects[1].setAttribute('position', headerObjectsX[1] + ' ' + headerObjectsY[1] + ' ' + headerObjectsZ[1]);
+			headerObjects[2].setAttribute('position', headerObjectsX[2] + ' ' + headerObjectsY[2] + ' ' + headerObjectsZ[2]);
+			
+			screenObjects[0].setAttribute('position', screenObjectsX[0] + ' ' + screenObjectsY[0] + ' ' + screenObjectsZ[0]);
+			screenObjects[1].setAttribute('position', screenObjectsX[1] + ' ' + screenObjectsY[1] + ' ' + screenObjectsZ[1]);
+			screenObjects[2].setAttribute('position', screenObjectsX[2] + ' ' + screenObjectsY[2] + ' ' + screenObjectsZ[2]);
+
 			function moveObjects()
 			{
 				//move the products				
@@ -218,27 +341,51 @@
 				{
 					productObjectsX[i] = productObjectsX[i] + productVelocityX;
 					circleObjectsX[i] = productObjectsX[i] + productVelocityX  + 0.5;
-				} 
+					detailsObjectsX[i] = detailsObjectsX[i] + productVelocityX;
+					headerObjectsX[i] = headerObjectsX[i] + productVelocityX;
+					screenObjectsX[i] = screenObjectsX[i] + productVelocityX;
+				}
 
 			}
 			
 			//stop the objects from moving when they reach the boundary
 			function checkCollisions()
 			{
-				//dev note, make this a for loop
-				
 					for (i = 0; i < 3; i++) 
 					{
+						if(productObjectsX[i] > maxXViewPosition)
+						{
+							productObjects[i].setAttribute('visible', 'false');
+							circleObjects[i].setAttribute('visible', 'false');
+							detailsObjects[i].setAttribute('visible', 'false');
+							headerObjects[i].setAttribute('visible', 'false');
+							screenObjects[i].setAttribute('visible', 'false');
+						}
+						else
+						{
+							productObjects[i].setAttribute('visible', 'true');
+							circleObjects[i].setAttribute('visible', 'true');
+							detailsObjects[i].setAttribute('visible', 'true');
+							headerObjects[i].setAttribute('visible', 'true');
+							screenObjects[i].setAttribute('visible', 'true');
+						}
+					
 						if(productObjectsX[i] > maxXPosition[i])
 						{
 							productObjectsX[i] = maxXPosition[i];
 							circleObjectsX[i] = maxXPosition[i] + 0.5;
+							detailsObjectsX[i] = maxXPosition[i] + 0.5;
+							headerObjectsX[i] = maxXPosition[i] + 0.5;
+							screenObjectsX[i] = maxXPosition[i] + 0.6;
 						}
 						
 						if(productObjectsX[i] < minXPosition[i])
 						{
 							productObjectsX[i] = minXPosition[i];
 							circleObjectsX[i] = minXPosition[i] + 0.5;
+							detailsObjectsX[i] = minXPosition[i] + 0.5;
+							headerObjectsX[i] = minXPosition[i] + 0.5;
+							screenObjectsX[i] = minXPosition[i] + 0.6;
 						}
 					}
 			}
@@ -253,6 +400,10 @@
 				{
 					productObjects[i].setAttribute('position', productObjectsX[i] + ' ' + productObjectsY[i] + ' ' + productObjectsZ[i]); //reposition the products
 					circleObjects[i].setAttribute('position', circleObjectsX[i] + ' ' + circleObjectsY[i] + ' ' + circleObjectsZ[i]); //reposition the circles
+					detailsObjects[i].setAttribute('position', detailsObjectsX[i] + ' ' + detailsObjectsY[i] + ' ' + detailsObjectsZ[i]); //reposition the details
+					headerObjects[i].setAttribute('position', headerObjectsX[i] + ' ' + headerObjectsY[i] + ' ' + headerObjectsZ[i]); //reposition the header
+					screenObjects[i].setAttribute('position', screenObjectsX[i] + ' ' + screenObjectsY[i] + ' ' + screenObjectsZ[i]); //reposition the screen
+					
 				}
 				
 			}, intervalLength);
