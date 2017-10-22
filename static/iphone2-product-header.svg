@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="129" height="39" viewBox="0 0 129 39">
+    <g fill="none" fill-rule="evenodd">
+        <text fill="#FFF" font-family="Tele-Grotesk-Fett, Tele-GroteskFet" font-size="22.5" transform="translate(0 -9)">
+            <tspan x=".953" y="23">Apple iPhone 8</tspan>
+        </text>
+        <path d="M19 23h18v18H19z"/>
+        <path fill="#000" fill-rule="nonzero" d="M28 35.953l4.635 2.797-1.23-5.273L35.5 29.93l-5.393-.457L28 24.5l-2.107 4.973-5.393.457 4.095 3.547-1.23 5.273z"/>
+        <path d="M19 23h18v18H19zM37.5 23h18v18h-18z"/>
+        <path fill="#000" fill-rule="nonzero" d="M46.5 35.953l4.635 2.797-1.23-5.273L54 29.93l-5.393-.457L46.5 24.5l-2.107 4.973L39 29.93l4.095 3.547-1.23 5.273z"/>
+        <path d="M37.5 23h18v18h-18z"/>
+        <g>
+            <path d="M56 23h18v18H56z"/>
+            <path fill="#000" fill-rule="nonzero" d="M65 35.953l4.635 2.797-1.23-5.273L72.5 29.93l-5.393-.457L65 24.5l-2.107 4.973-5.393.457 4.095 3.547-1.23 5.273z"/>
+            <path d="M56 23h18v18H56z"/>
+        </g>
+        <g>
+            <path d="M74.5 23h18v18h-18z"/>
+            <path fill="#000" fill-rule="nonzero" d="M83.5 35.953l4.635 2.797-1.23-5.273L91 29.93l-5.393-.457L83.5 24.5l-2.107 4.973L76 29.93l4.095 3.547-1.23 5.273z"/>
+            <path d="M74.5 23h18v18h-18z"/>
+        </g>
+        <g>
+            <path fill="#000" fill-rule="nonzero" d="M109.5 29.93l-5.393-.465L102 24.5l-2.107 4.973-5.393.457 4.095 3.547-1.23 5.273L102 35.953l4.635 2.797-1.223-5.273 4.088-3.547zm-7.5 4.62l-2.82 1.702.75-3.21-2.49-2.16 3.285-.285L102 27.575l1.283 3.03 3.285.285-2.49 2.16.75 3.21L102 34.55z"/>
+            <path d="M93 23h18v18H93z"/>
+        </g>
+    </g>
+</svg>
